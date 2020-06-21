@@ -140,6 +140,10 @@ export default class Form extends Component {
     return shouldRender(this, nextProps, nextState);
   }
 
+  dispatchChange() {
+    this.props.onChange && this.props.onChange(this.state);
+  }
+
   validate(
     formData,
     schema = this.props.schema,
@@ -280,10 +284,7 @@ export default class Form extends Component {
         errors: toErrorList(errorSchema),
       };
     }
-    this.setState(
-      state,
-      () => this.props.onChange && this.props.onChange(this.state)
-    );
+    this.setState(state, this.dispatchChange);
   };
 
   onBlur = (...args) => {
